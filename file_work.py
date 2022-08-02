@@ -1,6 +1,7 @@
 file_name = 'data.txt'
 
 def catalog_reader(file_name):
+# Функция конвертирует файл в словарь, убирает из меню Фахитос
     menu = {}
     cook_book = {}
 
@@ -9,13 +10,19 @@ def catalog_reader(file_name):
         for line in file:
             list_ingr = []
             cook = line.strip()
-            circle_number = int(file.readline())
-            for i in range(circle_number):
-                ingr = file.readline().strip()
-                menu = ingr.split('|')
-                menu_dict = dict(zip(keys, menu))
-                list_ingr.append(menu_dict)
-            cook_book[cook] = list_ingr                
+            if cook != 'Фахитос': 
+                circle_number = int(file.readline())
+                for i in range(circle_number):
+                    ingr = file.readline().strip()
+                    menu = ingr.split('|')
+                    menu_dict = dict(zip(keys, menu))
+                    list_ingr.append(menu_dict)
+                cook_book[cook] = list_ingr
+            else:
+                circle_number = int(file.readline())
+                for i in range(circle_number):
+                    file.readline()                                    
+                              
             file.readline()
     return cook_book
         
