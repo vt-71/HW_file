@@ -26,32 +26,29 @@ def catalog_reader(file_name):
             file.readline()
     return cook_book
         
-print(catalog_reader(file_name))
-# catalog_reader(file_name)
+# print(catalog_reader(file_name))
+catalog_reader(file_name)
 
 def get_shop_list_by_dishes(menu, person):
 # Функция рассчитывает список покупок, в зависимости от меню и кол-ва человек
-    cook_book = catalog_reader(file_name)
     shop_list = {}
-    if menu in cook_book:
-        list_ingr = cook_book[menu]
-          
-        for i in list_ingr: 
-            shop_quantity = {}
-            shop_quantity['measure'] = i['measure']
-            shop_quantity['quantity'] = int(i['quantity'])*person
-            shop_list[i['ingredient']] = shop_quantity
-        return shop_list
+    cook_book = catalog_reader(file_name)
+    for dish in menu:
+         if dish in cook_book:             
+             for i in cook_book[dish]:
+                    shop_quantity = dict() 
+                    if i['ingredient'] not in shop_list:                        
+                        shop_quantity['measure'] = i['measure']
+                        shop_quantity['quantity'] = int(i['quantity'])*person 
+                        shop_list[i['ingredient']] = shop_quantity 
+                    else:
+                        shop_list[i['ingredient']]['quantity'] = shop_list[i['ingredient']]['quantity'] + int(i['quantity']) * person
             
-    else:
-        print("Такого блюда нет в меню")      
+         else:
+                print("Такого блюда нет в меню")
+                
+    return shop_list      
 
 
-# get_shop_list_by_dishes(['Запеченный картофель', 'Омлет'], 2)
-
-# print(get_shop_list_by_dishes('Запеченный картофель', 4))
-
-
-# {
-#    'Картофель': {'measure': 'кг', 'quantity': 2}   
-# }
+print(get_shop_list_by_dishes(['Запеченный картофель', 'Омлет'], 2))
+print(get_shop_list_by_dishes(['Омлет', 'Омлет'], 1))
